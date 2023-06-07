@@ -25,11 +25,13 @@ public class JobProcessor
         Console.WriteLine("Drilling some holes\r\n");
         await Task.Delay(2000, cancellationToken);
     }
+
     private async Task MoveTheBoxes(CancellationToken cancellationToken)
     {
         Console.WriteLine("Moving the Boxes\r\n");
         await Task.Delay(3000, cancellationToken);
     }
+
     private async Task FillTheBucket(CancellationToken cancellationToken)
     {
         Console.WriteLine("Filling the bucket\r\n");

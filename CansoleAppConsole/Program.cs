@@ -2,10 +2,17 @@
 
 class Program
 {
-    static async Task Main()
+    static void Main()
     {
-        var myJob = new JobHandler(5000, ConsoleKey.K, new CancellationTokenSource());
+        var myJobs = new List<JobHandler>
+        {
+            new JobHandler(ConsoleKey.K, new CancellationTokenSource()),
+            new JobHandler(ConsoleKey.S, new CancellationTokenSource()),
+        };
 
-        await myJob.DoWork();
+        Parallel.ForEach(myJobs, async job =>
+        {
+            await job.DoWork();
+        });
     }
 }
