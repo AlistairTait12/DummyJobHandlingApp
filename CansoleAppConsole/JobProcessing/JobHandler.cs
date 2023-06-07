@@ -15,13 +15,13 @@ public class JobHandler
 
     public async Task DoWork()
     {
-        var tasks = new List<Task>
+        var workTasks = new List<Task>
         {
             SetOffJobProcessor(_tokenSource.Token, new JobProcessor()),
-            CheckForCancellation()
+            ListenForCancellation(_tokenSource.Token)
         };
 
-        await Task.WhenAny(tasks);
+        await Task.WhenAny(workTasks);
     }
 
     private async Task SetOffJobProcessor(CancellationToken token, JobProcessor processor)
@@ -29,14 +29,23 @@ public class JobHandler
         await processor.DoTheHeftyWork(token);
     }
 
-    private async Task CheckForCancellation()
+    private async Task ListenForCancellation(CancellationToken token)
     {
         Console.WriteLine($"Checking for cancellation, press {_keyToStop} to stop this job");
-        while (Console.ReadKey().Key != _keyToStop)
+        while (true)
         {
-            await Task.Delay(1000);
+            try
+            {
+                if (Console.ReadKey().Key == _keyToStop)
+                {
+                    _tokenSource.Cancel();
+                    break;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                Console.WriteLine("Exception caught in the listener");
+            }
         }
-
-        _tokenSource.Cancel();
     }
 }

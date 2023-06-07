@@ -13,7 +13,7 @@ public class JobProcessor
             await FillTheBucket(cancellationToken);
             await WriteTheReport(cancellationToken);
         }
-        catch (TaskCanceledException ex)
+        catch (Exception ex)
         {
             Console.WriteLine("Operation cancelled");
             Console.WriteLine(ex.Message.ToString());

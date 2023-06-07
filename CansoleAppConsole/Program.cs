@@ -2,7 +2,7 @@
 
 class Program
 {
-    static void Main()
+    static async Task Main()
     {
         var myJobs = new List<JobHandler>
         {
