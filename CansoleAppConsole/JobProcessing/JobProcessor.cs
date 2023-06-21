@@ -4,53 +4,36 @@ namespace CansoleAppConsole.JobProcessing;
 
 public class JobProcessor
 {
-    public async Task DoTheHeftyWork(CancellationToken cancellationToken)
+    public async Task DoTheHeftyWork()
     {
-        try
-        {
-            await DrillSomeHoles(cancellationToken);
-            await MoveTheBoxes(cancellationToken);
-            await FillTheBucket(cancellationToken);
-            await WriteTheReport(cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Operation cancelled");
-            Console.WriteLine(ex.Message.ToString());
-        }
+        await DrillSomeHoles();
+        await MoveTheBoxes();
+        await FillTheBucket();
+        await WriteTheReport();
     }
 
-    private async Task DrillSomeHoles(CancellationToken cancellationToken)
+    private async Task DrillSomeHoles()
     {
         Console.WriteLine("Drilling some holes\r\n");
-        await Task.Delay(2000, cancellationToken);
+        await Task.Delay(2000);
     }
 
-    private async Task MoveTheBoxes(CancellationToken cancellationToken)
+    private async Task MoveTheBoxes()
     {
         Console.WriteLine("Moving the Boxes\r\n");
-        await Task.Delay(3000, cancellationToken);
+        await Task.Delay(3000);
     }
 
-    private async Task FillTheBucket(CancellationToken cancellationToken)
+    private async Task FillTheBucket()
     {
         Console.WriteLine("Filling the bucket\r\n");
-        await Task.Delay(5000, cancellationToken);
+        await Task.Delay(5000);
     }
 
-    private async Task WriteTheReport(CancellationToken cancellationToken)
+    private async Task WriteTheReport()
     {
         Console.WriteLine("Writing the report\r\n");
-        await Task.Delay(3000, cancellationToken);
-        SayTokenWasCancelled(cancellationToken);
+        await Task.Delay(3000);
         Console.WriteLine("Finished!");
-    }
-
-    private void SayTokenWasCancelled(CancellationToken cancellationToken)
-    {
-        if (cancellationToken.IsCancellationRequested)
-        {
-            Console.WriteLine("Cancellation was requested");
-        }
     }
 }
